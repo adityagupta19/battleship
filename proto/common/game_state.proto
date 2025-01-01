@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package proto;
+option go_package = "github.com/adityagupta19/battleship/proto";
+
+// Enum for cell states on the grid
+enum CellState {
+    WATER = 0;  // Empty water
+    SHIP = 1;   // Ship present
+    MISSED = -1;  // Missed shot
+    HIT = 2;    // Hit ship
+}
+
+// Enum for shot result
+enum ShotResult {
+    SHOT_MISS = 0;   // Shot missed
+    SHOT_HIT = 1;    // Shot hit
+}
+
+// Message for coordinates
+message Coordinate {
+    int32 x = 1; // X-coordinate (row)
+    int32 y = 2; // Y-coordinate (column)
+}
+
+// Message for ship details
+message Ship {
+    string type = 1;                // Type of the ship (e.g., "battleship", "destroyer")
+    repeated Coordinate positions = 2; // List of coordinates occupied by the ship
+    int32 hits = 3;                 // Number of hits taken by the ship
+}
+
+// Message for a fired shot
+message Shot {
+    Coordinate position = 1;       // Coordinates of the shot
+    ShotResult result = 2;         // Result of the shot (HIT or MISS)
+}
+
+// Message for a player's board
+message Board {
+    repeated CellState grid = 1;   // Flattened 2D grid representation of the board
+    repeated Ship ships = 2;       // List of ships on the board
+    repeated Shot shots_fired = 3; // Shots fired by the player
+}
+
+// Message for player details
+message Player {
+    string player_id = 1;          // Unique identifier for the player
+    string name = 2;               // Name or username of the player
+    bool is_ready = 3;             // Whether the player is ready (ships placed)
+    Board board = 4;               // Player's board
+}
+
+// Message for game details
+message Game {
+    string game_id = 1;            // Unique identifier for the game
+    map<string, Player> players = 2; // Map of player IDs to Player objects
+    string turn = 3;               // Indicates which player's turn it is
+    string status = 4;             // Status of the game ("in-progress", "finished")
+    string winner = 5;             // Winner of the game ("playerA", "playerB", or empty if no winner yet)
+    string created_at = 6;         // Timestamp of game creation
+    string last_move_at = 7;       // Timestamp of the last move
+}
