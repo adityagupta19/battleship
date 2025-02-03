@@ -1,0 +1,6 @@
+/game/gen/
+/matchmaking/gen/
+/gateway/gen/
+/user/gen/
+
+/proto/*/gen/
