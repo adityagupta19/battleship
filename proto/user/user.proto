@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "user/gen/proto/user";
+
+
+
+service UserService {
+    rpc RegisterUser (RegisterRequest) returns (RegisterResponse);
+    rpc GetUser (UserRequest) returns (UserResponse);
+}
+
+message RegisterRequest {
+    string name = 1;
+}
+
+message RegisterResponse {
+    string user_id = 1;
+}
+
+message UserRequest {
+    string user_id = 1;
+}
+
+message UserResponse {
+    string user_id = 1;
+    string name = 2;
+}
