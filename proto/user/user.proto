@@ -12,7 +12,7 @@ service UserService {
 }
 
 message RegisterRequest {
-    string name = 1;
+    string username = 1;
 }
 
 message RegisterResponse {
@@ -25,5 +25,5 @@ message UserRequest {
 
 message UserResponse {
     string user_id = 1;
-    string name = 2;
+    string username = 2;
 }

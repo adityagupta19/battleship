@@ -46,7 +46,7 @@ message Board {
 // Message for player details
 message Player {
     string player_id = 1;          // Unique identifier for the player
-    string name = 2;               // Name or username of the player
+    string username = 2;               // Name or username of the player
     bool is_ready = 3;             // Whether the player is ready (ships placed)
     Board board = 4;               // Player's board
 }
