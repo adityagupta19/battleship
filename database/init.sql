@@ -14,5 +14,8 @@ This table stores user data with:
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
-    rating INT DEFAULT 1000
+    rating INT DEFAULT 1000,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+

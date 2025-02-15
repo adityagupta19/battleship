@@ -20,14 +20,14 @@ all: generate
 generate:
 	# Create the gen directories if they don't exist
 	mkdir -p $(USER_SERVICE_GEN)/proto/common \
-	         $(USER_SERVICE_GEN)/proto/user \
-	         $(USER_SERVICE_GEN)/proto/matchmaking
+	         $(USER_SERVICE_GEN)/proto/userpb \
+	         $(USER_SERVICE_GEN)/proto/matchmakingpb
 	mkdir -p $(MATCHMAKING_SERVICE_GEN)/proto/common \
-	         $(MATCHMAKING_SERVICE_GEN)/proto/user \
-	         $(MATCHMAKING_SERVICE_GEN)/proto/matchmaking
+	         $(MATCHMAKING_SERVICE_GEN)/proto/userpb \
+	         $(MATCHMAKING_SERVICE_GEN)/proto/matchmakingpb
 	mkdir -p $(GAME_SERVICE_GEN)/proto/common \
-	         $(GAME_SERVICE_GEN)/proto/user \
-	         $(GAME_SERVICE_GEN)/proto/matchmaking
+	         $(GAME_SERVICE_GEN)/proto/userpb \
+	         $(GAME_SERVICE_GEN)/proto/matchmakingpb
 
 	# Run protoc to generate Go files
 	protoc --proto_path=$(PROTO_DIR) \

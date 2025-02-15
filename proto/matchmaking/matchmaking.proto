@@ -1,19 +1,19 @@
 syntax = "proto3";
 
-package matchmaking;
+package matchmakingpb;
 
-option go_package = "matchmaking/gen/proto/matchmaking";
+option go_package = "matchmakingpb/";
 
 service MatchmakingService {
     rpc FindMatch (FindMatchRequest) returns (FindMatchResponse);
 }
 
 message FindMatchRequest {
-    string user_id = 1;
+    uint32 user_id = 1;
 }
 
 message FindMatchResponse {
-    string game_id = 1;
-    string opponent_id = 2;
+    uint64 game_id = 1;
+    uint32 opponent_id = 2;
 }
 
