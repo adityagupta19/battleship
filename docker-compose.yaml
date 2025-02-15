@@ -1,6 +1,13 @@
 version: '3.8'
 
 services:
+  user-service:
+    build: user
+    ports:
+      - "50051:50051"
+    depends_on:
+      - postgres
+
   postgres:
     build: database
     ports:
