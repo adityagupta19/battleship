@@ -18,4 +18,14 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS games (
+    id BIGSERIAL PRIMARY KEY,
+    player1_id INT REFERENCES users(id),
+    player2_id INT REFERENCES users(id),
+    status VARCHAR(32) NOT NULL,
+    current_turn INT,
+    winner_id INT,
+    state JSONB NOT NULL DEFAULT '{}',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
