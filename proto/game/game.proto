@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package gamepb;
+
+option go_package = "gamepb/";
+
+service GameService {
+    rpc GetGameState (GetGameRequest) returns (GameStateResponse);
+    rpc PlaceShips (PlaceShipsRequest) returns (PlaceShipsResponse);
+    rpc FireShot (FireShotRequest) returns (FireShotResponse);
+}
+
+message Coordinate {
+    int32 x = 1;
+    int32 y = 2;
+}
+
+message ShipView {
+    string type = 1;
+    repeated Coordinate positions = 2;
+    int32 hits = 3;
+    bool sunk = 4;
+}
+
+message BoardView {
+    repeated int32 grid = 1;
+    repeated ShipView ships = 2;
+}
+
+message GetGameRequest {
+    uint64 game_id = 1;
+    uint32 user_id = 2;
+}
+
+message GameStateResponse {
+    uint64 game_id = 1;
+    string status = 2;
+    uint32 current_turn = 3;
+    uint32 winner_id = 4;
+    bool your_turn = 5;
+    bool you_ready = 6;
+    bool opponent_ready = 7;
+    BoardView your_board = 8;
+    BoardView opponent_view = 9;
+}
+
+message ShipPlacement {
+    string type = 1;
+    int32 start_x = 2;
+    int32 start_y = 3;
+    bool horizontal = 4;
+}
+
+message PlaceShipsRequest {
+    uint64 game_id = 1;
+    uint32 user_id = 2;
+    repeated ShipPlacement ships = 3;
+}
+
+message PlaceShipsResponse {
+    bool success = 1;
+    string message = 2;
+    string status = 3;
+}
+
+message FireShotRequest {
+    uint64 game_id = 1;
+    uint32 user_id = 2;
+    int32 x = 3;
+    int32 y = 4;
+}
+
+message FireShotResponse {
+    string result = 1;
+    string sunk_ship = 2;
+    bool game_over = 3;
+    uint32 winner_id = 4;
+    uint32 next_turn = 5;
+}
