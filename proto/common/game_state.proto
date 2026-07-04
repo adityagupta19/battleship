@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package proto;
-option go_package = "/common";
+package common;
+option go_package = "common/";
 
 // Enum for cell states on the grid
 enum CellState {
     WATER = 0;  // Empty water
     SHIP = 1;   // Ship present
-    MISSED = -1;  // Missed shot
+    MISSED = 3;   // Missed shot
     HIT = 2;    // Hit ship
 }
 
