@@ -1,12 +1,62 @@
-version: '3.8'
-
 services:
   user-service:
     build: user
+    restart: unless-stopped
     ports:
       - "50051:50051"
+    environment:
+      - POSTGRES_DSN=host=postgres user=admin password=adminpassword dbname=battleship port=5432 sslmode=disable
     depends_on:
       - postgres
+
+  matchmaking-service:
+    build: matchmaking
+    ports:
+      - "50052:50052"
+    environment:
+      - RABBITMQ_URL=amqp://admin:adminpassword@rabbitmq:5672/
+      - REDIS_ADDR=redis:6379
+    depends_on:
+      - postgres
+      - rabbitmq
+      - redis
+
+  game-service:
+    build: game
+    restart: unless-stopped
+    ports:
+      - "50053:50053"
+    environment:
+      - POSTGRES_DSN=host=postgres user=admin password=adminpassword dbname=battleship port=5432 sslmode=disable
+      - RABBITMQ_URL=amqp://admin:adminpassword@rabbitmq:5672/
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  gateway:
+    build: gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - MATCHMAKING_ADDR=matchmaking-service:50052
+      - GAME_ADDR=game-service:50053
+      - USER_ADDR=user-service:50051
+      - CORS_ORIGIN=http://localhost:3000
+    depends_on:
+      - matchmaking-service
+      - game-service
+      - user-service
+
+  web:
+    build:
+      context: web
+      args:
+        VITE_API_URL: http://localhost:8080
+        VITE_WS_URL: ws://localhost:8080/ws
+    ports:
+      - "3000:80"
+    depends_on:
+      - gateway
 
   postgres:
     build: database

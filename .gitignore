@@ -4,3 +4,6 @@
 /user/gen/
 
 /proto/*/gen/
+
+/web/node_modules/
+/web/dist/
